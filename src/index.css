@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ================== Root Theme ================== */
+:root {
+  --brand: #0E82E9;
+  --brand-dark: #0B6FC4;
+  --accent: #22C55E;
+  --gradient: linear-gradient(135deg, #0E82E9 0%, #22C55E 100%);
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.25);
+  --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --shadow-strong: 0 4px 20px rgba(0, 0, 0, 0.25);
+  --radius-xl: 1.5rem;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  font-family: 'Inter', system-ui, sans-serif;
+  scroll-behavior: smooth;
+  background-color: #f9fafb;
+  color: #111827;
+}
+
+/* ================== Typography ================== */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+p {
+  color: #374151;
+  line-height: 1.7;
+}
+
+/* Fluid font scaling */
+h1 {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+}
+h2 {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+}
+h3 {
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+}
+
+/* ================== Scrollbar Styling ================== */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--brand);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-dark);
+}
+
+/* ================== Glassmorphism Utility ================== */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px) saturate(150%);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-soft);
+}
+
+/* ================== Transitions ================== */
+a, button {
+  @apply transition-all duration-300 ease-in-out;
+}
+a:hover, button:hover {
+  transform: translateY(-2px);
+}
+
+/* ================== Dark Mode ================== */
+.dark {
+  background-color: #0f172a;
+  color: #e2e8f0;
+}
+
+.dark p {
+  color: #cbd5e1;
+}
+
+.dark .glass {
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  box-shadow: var(--shadow-strong);
+}
