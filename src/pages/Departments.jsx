@@ -1,17 +1,17 @@
 import React from 'react'
 
 const departments = [
-  {id:1, title:'Cardiology', image:'/images/departments/cardiology.jpg', desc:'Comprehensive heart care with modern cath lab.'},
-  {id:2, title:'Pediatrics', image:'/images/departments/pediatrics.jpg', desc:'Complete care for infants and children.'},
-  {id:3, title:'Orthopedics', image:'/images/departments/orthopedics.jpg', desc:'Joint replacements, sports injuries & trauma.'},
-  {id:4, title:'Neurology', image:'/images/departments/neurology.jpg', desc:'Brain & spine care, stroke management.'},
-  {id:5, title:'Dermatology', image:'/images/departments/dermatology.jpg', desc:'Skin, hair & cosmetic dermatology.'},
-  {id:6, title:'ENT', image:'/images/departments/ent.jpg', desc:'Ear, nose & throat care for all ages.'},
-  {id:7, title:'Gastroenterology', image:'/images/departments/gastroenterology.jpg', desc:'Liver, pancreas & digestive system care.'},
-  {id:8, title:'Nephrology', image:'/images/departments/nephrology.jpg', desc:'Kidney care & dialysis support.'},
-  {id:9, title:'Pulmonology', image:'/images/departments/pulmonology.jpg', desc:'Asthma, COPD & critical respiratory care.'},
-  {id:10, title:'Urology', image:'/images/departments/urology.jpg', desc:'Urinary & male reproductive health.'},
-  {id:11, title:'Oncology', image:'/images/departments/oncology.jpg', desc:'Comprehensive cancer care & chemotherapy.'},
+  {id:1, title:'Cardiology', image:'/images/departments/cardiology.png', desc:'Comprehensive heart care with modern cath lab.'},
+  {id:2, title:'Pediatrics', image:'/images/departments/pediatrics.png', desc:'Complete care for infants and children.'},
+  {id:3, title:'Orthopedics', image:'/images/departments/orthopedics.png', desc:'Joint replacements, sports injuries & trauma.'},
+  {id:4, title:'Neurology', image:'/images/departments/neurology.png', desc:'Brain & spine care, stroke management.'},
+  {id:5, title:'Dermatology', image:'/images/departments/dermatology.png', desc:'Skin, hair & cosmetic dermatology.'},
+  {id:6, title:'ENT', image:'/images/departments/ent.png', desc:'Ear, nose & throat care for all ages.'},
+  {id:7, title:'Gastroenterology', image:'/images/departments/gastroenterology.png', desc:'Liver, pancreas & digestive system care.'},
+  {id:8, title:'Nephrology', image:'/images/departments/nephrology.png', desc:'Kidney care & dialysis support.'},
+  {id:9, title:'Pulmonology', image:'/images/departments/pulmonology.png', desc:'Asthma, COPD & critical respiratory care.'},
+  {id:10, title:'Urology', image:'/images/departments/urology.png', desc:'Urinary & male reproductive health.'},
+  {id:11, title:'Oncology', image:'/images/departments/oncology.png', desc:'Comprehensive cancer care & chemotherapy.'},
 ]
 
 export default function Departments(){
