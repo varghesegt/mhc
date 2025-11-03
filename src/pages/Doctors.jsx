@@ -54,7 +54,7 @@ const WHATSAPP_NUMBER = "919092357100";
 const doctors = [
   { id: "1",  name: "Dr. Vignesh Kesavan",          dept: "Dermatology, Venereology & Leprosy (DVL)" },
   { id: "2",  name: "Dr. Keerthika Jayaraman",      dept: "Radiation Therapy" },
-  { id: "3",  name: "Dr. Sahana Devi",              dept: "Pediatrics" },
+  { id: "3",  name: "Dr. Kumar",              dept: "Orthopedics" },
   { id: "4",  name: "Dr. Indirapriyadharsini",      dept: "Anesthesiology" },
   { id: "5",  name: "Dr. Jerome D’Souza A",         dept: "General Surgery" },
   { id: "6",  name: "Dr. Sakthivel P",              dept: "Anatomy (BDS, MSc Anat.)" },
