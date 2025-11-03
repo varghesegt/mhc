@@ -52,27 +52,27 @@ function SmartImage({ src, alt }) {
 const WHATSAPP_NUMBER = "919092357100";
 
 const doctors = [
-  { id: "1", name: "Dr. Aarthi Raj", dept: "Cardiology" },
-  { id: "2", name: "Dr. Bharath Kumar", dept: "Neurology" },
-  { id: "3", name: "Dr. Sahana Devi", dept: "Pediatrics" },
-  { id: "4", name: "Dr. Vignesh N", dept: "Orthopedics" },
-  { id: "5", name: "Dr. Meera Joshi", dept: "Dermatology" },
-  { id: "6", name: "Dr. Arjun Prasad", dept: "General Medicine" },
-  { id: "7", name: "Dr. Kavya Sridhar", dept: "ENT" },
-  { id: "8", name: "Dr. Rohit Anand", dept: "Gastroenterology" },
-  { id: "9", name: "Dr. Nisha Menon", dept: "Ophthalmology" },
-  { id: "10", name: "Dr. Rajesh Varma", dept: "Oncology" },
-  { id: "11", name: "Dr. Priya Desai", dept: "Gynecology" },
-  { id: "12", name: "Dr. Kiran S", dept: "Urology" },
-  { id: "13", name: "Dr. Sneha Iyer", dept: "Psychiatry" },
-  { id: "14", name: "Dr. Manoj Pillai", dept: "Nephrology" },
-  { id: "15", name: "Dr. Riya Balan", dept: "Endocrinology" },
-  { id: "16", name: "Dr. Vikram Patel", dept: "Pulmonology" },
-  { id: "17", name: "Dr. Anjali Thomas", dept: "Dentistry" },
-  { id: "18", name: "Dr. Naveen Reddy", dept: "Radiology" },
-  { id: "19", name: "Dr. Harini Krish", dept: "Physiotherapy" },
-  { id: "20", name: "Dr. Samuel D", dept: "Hematology" },
-  { id: "21", name: "Dr. Satheesh Govindan", dept: "Plastic Surgery" },
+  { id: "1",  name: "Dr. Vignesh Kesavan",          dept: "Dermatology, Venereology & Leprosy (DVL)" },
+  { id: "2",  name: "Dr. Keerthika Jayaraman",      dept: "Radiation Therapy" },
+  { id: "3",  name: "Dr. Sahana Devi",              dept: "Pediatrics" },
+  { id: "4",  name: "Dr. Indirapriyadharsini",      dept: "Anesthesiology" },
+  { id: "5",  name: "Dr. Jerome D’Souza A",         dept: "General Surgery" },
+  { id: "6",  name: "Dr. Sakthivel P",              dept: "Anatomy (BDS, MSc Anat.)" },
+  { id: "7",  name: "Dr. Rajeswari S",              dept: "Dental Surgery (BDS, D.Pharm)" },
+  { id: "8",  name: "Dr. Sai Vidyasagar S",         dept: "Oral & Maxillofacial Surgery (MDS)" },
+  { id: "9",  name: "Dr. Manjula P",                dept: "General Surgery" },
+  { id: "10", name: "Dr. Saravanan R P",            dept: "General Medicine" },
+  { id: "11", name: "Dr. Raji Lakshmanan",          dept: "Obstetrics & Gynecology" },
+  { id: "12", name: "Dr. Kannan D",                 dept: "Plastic & Reconstructive Surgery" },
+  { id: "13", name: "Dr. Anand Babu",               dept: "Pulmonology" },
+  { id: "14", name: "Dr. Ajit Kumar N",             dept: "Spine Surgery" },
+  { id: "15", name: "Dr. Amuthan K R",              dept: "Otorhinolaryngology (ENT)" },
+  { id: "16", name: "Dr. Malathi Sriram",           dept: "Obstetrics & Gynecology (DGO)" },
+  { id: "17", name: "Dr. Vignesh V",                dept: "Dentistry" },
+  { id: "18", name: "Dr. Sakthivadivan P",          dept: "General Surgery" },
+  { id: "19", name: "Dr. Vijay Pradap",             dept: "Otorhinolaryngology (ENT)" },
+  { id: "20", name: "Dr. Aruleeswaran Thangarasu",  dept: "Otorhinolaryngology (ENT)" },
+  { id: "21", name: "Dr. Satheesh Govindan",        dept: "Anesthesiology" },
 ].map((d, i) => ({
   ...d,
   exp: `${8 + (i % 10)} yrs Experience`,
@@ -297,7 +297,7 @@ export default function Doctors() {
 
       <div className="max-w-7xl mx-auto px-4 py-10">
         <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 mb-2">
-          Premium Appointment Booking
+          Doctors 
         </h2>
         <p className="text-slate-600 mb-6">
           Find a specialist and book instantly via WhatsApp or call.
