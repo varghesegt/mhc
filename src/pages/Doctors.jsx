@@ -69,7 +69,6 @@ const doctors = [
   { id: "21", name: "Dr. Satheesh Govindan", dept: "Anesthesiology" },
 ].map((d, i) => ({
   ...d,
-  exp: `${8 + (i % 10)} yrs Experience`,
   image: `/images/doctor${i + 1}.jpg`,
   phone: `+9190000000${(i + 10).toString().padStart(2, "0")}`,
   whatsapp: WHATSAPP_NUMBER,
