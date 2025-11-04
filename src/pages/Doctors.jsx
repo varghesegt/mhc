@@ -11,9 +11,6 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-/* =========================================================================
-   ✅ SmartImage — shimmer load + graceful fallback
-=========================================================================== */
 function SmartImage({ src, alt }) {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
@@ -46,15 +43,12 @@ function SmartImage({ src, alt }) {
   );
 }
 
-/* =========================================================================
-   ✅ Doctor Data
-=========================================================================== */
 const WHATSAPP_NUMBER = "919092357100";
 
 const doctors = [
   { id: "1", name: "Dr. Vignesh Kesavan", dept: "Dermatology, Venereology & Leprosy (DVL)" },
   { id: "2", name: "Dr. Keerthika Jayaraman", dept: "Radiation Therapy" },
-  { id: "3", name: "Dr. Kumar", dept: "Orthopedics" },
+  { id: "3", name: "Dr. Arun Gandhi", dept: "Orthopedics" },
   { id: "4", name: "Dr. Indirapriyadharsini", dept: "Anesthesiology" },
   { id: "5", name: "Dr. Jerome D’Souza A", dept: "General Surgery" },
   { id: "6", name: "Dr. Sakthivel P", dept: "Anatomy (BDS, MSc Anat.)" },
@@ -81,9 +75,6 @@ const doctors = [
   whatsapp: WHATSAPP_NUMBER,
 }));
 
-/* =========================================================================
-   ✅ Utilities
-=========================================================================== */
 const timeSlots = ["09:00 AM", "10:30 AM", "12:00 PM", "03:00 PM", "04:30 PM", "06:00 PM"];
 
 const todayISO = () => {
@@ -94,7 +85,7 @@ const todayISO = () => {
 
 const maxDateISO = () => {
   const d = new Date();
-  d.setMonth(d.getMonth() + 2); // only allow next 2 months
+  d.setMonth(d.getMonth() + 2);
   d.setHours(0, 0, 0, 0);
   return d.toISOString().slice(0, 10);
 };
@@ -106,9 +97,6 @@ const getGreeting = () => {
   return "Good evening";
 };
 
-/* =========================================================================
-   ✅ Modal — patient name input
-=========================================================================== */
 function NameModal({ open, onClose, onConfirm, doctor, date, time }) {
   const [name, setName] = useState("");
   const ref = useRef(null);
@@ -174,9 +162,6 @@ function NameModal({ open, onClose, onConfirm, doctor, date, time }) {
   );
 }
 
-/* =========================================================================
-   ✅ Main Component
-=========================================================================== */
 export default function Doctors() {
   const [search, setSearch] = useState("");
   const [selectedDate, setSelectedDate] = useState({});
@@ -388,9 +373,3 @@ export default function Doctors() {
     </section>
   );
 }
-
-/* =========================================================================
-   🔍 Optional CSS (in global.css)
-   .no-scrollbar::-webkit-scrollbar { display: none; }
-   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-=========================================================================== */

@@ -3,9 +3,6 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { Calendar, Clock, Send, ChevronLeft, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-/* =============================================================
-   ✅ Doctors Data (connected via query param)
-============================================================= */
 const doctors = {
   murugan: {
     name: "Dr. Murugan",
