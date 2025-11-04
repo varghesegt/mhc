@@ -118,7 +118,6 @@ export default function Home() {
         </div>
 </section>
 
-      {/* =================== WELCOME =================== */}
       <section className="max-w-7xl mx-auto px-6 py-24 grid md:grid-cols-2 gap-14 items-center">
         <motion.img
           src="/logo.png"
