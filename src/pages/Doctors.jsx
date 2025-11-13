@@ -11,6 +11,9 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
+/* -------------------------------------------
+   IMAGE COMPONENT (LOADER + ERROR FALLBACK)
+-------------------------------------------- */
 function SmartImage({ src, alt }) {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
@@ -18,11 +21,12 @@ function SmartImage({ src, alt }) {
   return (
     <div
       className="relative w-full overflow-hidden rounded-3xl group"
-      style={{ aspectRatio: "4 / 5" }}
+      style={{ aspectRatio: "4/5" }}
     >
       {!loaded && !error && (
         <div className="absolute inset-0 bg-gradient-to-br from-slate-200/80 to-slate-100/60 animate-pulse rounded-3xl" />
       )}
+
       {!error ? (
         <img
           src={src}
@@ -30,8 +34,8 @@ function SmartImage({ src, alt }) {
           loading="lazy"
           onLoad={() => setLoaded(true)}
           onError={() => setError(true)}
-          className={`absolute inset-0 w-full h-full object-cover transition-all duration-700
-          ${loaded ? "opacity-100 scale-100" : "opacity-0 scale-105"}
+          className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 
+          ${loaded ? "opacity-100 scale-100" : "opacity-0 scale-105"} 
           group-hover:scale-110`}
         />
       ) : (
@@ -43,8 +47,15 @@ function SmartImage({ src, alt }) {
   );
 }
 
-const WHATSAPP_NUMBER = "+918098096555";
+/* -------------------------------------------
+   CORRECT WHATSAPP NUMBER
+   WhatsApp URLs MUST NOT contain "+"
+-------------------------------------------- */
+const WHATSAPP_NUMBER = "918098096555";
 
+/* -------------------------------------------
+   DOCTORS LIST + IMAGE + PHONE MAPPING
+-------------------------------------------- */
 const doctors = [
   { id: "1", name: "Dr. Vignesh Kesavan", dept: "Dermatology, Venereology & Leprosy (DVL)" },
   { id: "2", name: "Dr. Keerthika Jayaraman", dept: "Radiation Therapy" },
@@ -70,24 +81,27 @@ const doctors = [
 ].map((d, i) => ({
   ...d,
   image: `/images/doctor${i + 1}.jpg`,
-phone: "+918098096555",
-whatsapp: WHATSAPP_NUMBER,
-
-
+  phone: "+918098096555",
+  whatsapp: WHATSAPP_NUMBER,
 }));
 
-const timeSlots = ["09:00 AM", "10:30 AM", "12:00 PM", "03:00 PM", "04:30 PM", "06:00 PM"];
+/* -------------------------------------------
+   TIME SLOTS & DATE HELPERS
+-------------------------------------------- */
+const timeSlots = [
+  "09:00 AM",
+  "10:30 AM",
+  "12:00 PM",
+  "03:00 PM",
+  "04:30 PM",
+  "06:00 PM",
+];
 
-const todayISO = () => {
-  const d = new Date();
-  d.setHours(0, 0, 0, 0);
-  return d.toISOString().slice(0, 10);
-};
+const todayISO = () => new Date().toISOString().slice(0, 10);
 
 const maxDateISO = () => {
   const d = new Date();
   d.setMonth(d.getMonth() + 2);
-  d.setHours(0, 0, 0, 0);
   return d.toISOString().slice(0, 10);
 };
 
@@ -98,9 +112,13 @@ const getGreeting = () => {
   return "Good evening";
 };
 
+/* -------------------------------------------
+   NAME ENTRY MODAL (BEFORE SENDING WHATSAPP)
+-------------------------------------------- */
 function NameModal({ open, onClose, onConfirm, doctor, date, time }) {
   const [name, setName] = useState("");
   const ref = useRef(null);
+
   useEffect(() => {
     if (open) setTimeout(() => ref.current?.focus(), 100);
     else setName("");
@@ -116,6 +134,7 @@ function NameModal({ open, onClose, onConfirm, doctor, date, time }) {
           exit={{ opacity: 0 }}
         >
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
+
           <motion.div
             className="relative w-full max-w-md rounded-2xl shadow-2xl border border-white/10 bg-white/90 backdrop-blur-xl p-6"
             initial={{ y: 30, opacity: 0 }}
@@ -129,7 +148,7 @@ function NameModal({ open, onClose, onConfirm, doctor, date, time }) {
               <X className="h-5 w-5 text-slate-500" />
             </button>
 
-            <h3 className="text-xl font-bold text-slate-900 mb-2">Confirm Appointment</h3>
+            <h3 className="text-xl font-bold text-slate-900 mb-1">Confirm Appointment</h3>
             <p className="text-sm text-slate-600">{doctor?.name} — {doctor?.dept}</p>
             <p className="text-xs text-slate-500 mb-4">{date} at {time}</p>
 
@@ -163,6 +182,9 @@ function NameModal({ open, onClose, onConfirm, doctor, date, time }) {
   );
 }
 
+/* -------------------------------------------
+   MAIN DOCTORS PAGE
+-------------------------------------------- */
 export default function Doctors() {
   const [search, setSearch] = useState("");
   const [selectedDate, setSelectedDate] = useState({});
@@ -173,21 +195,21 @@ export default function Doctors() {
   const [modalDate, setModalDate] = useState("");
   const [modalTime, setModalTime] = useState("");
 
+  /* Filtering */
   const filtered = useMemo(() => {
     const s = search.toLowerCase();
-    return doctors.filter((d) =>
-      d.name.toLowerCase().includes(s) || d.dept.toLowerCase().includes(s)
+    return doctors.filter(
+      (d) => d.name.toLowerCase().includes(s) || d.dept.toLowerCase().includes(s)
     );
   }, [search]);
 
-  // build preview messages
+  /* Generate preview WhatsApp message */
   useEffect(() => {
     filtered.forEach((d) => {
       if (selectedDate[d.id] && selectedTime[d.id]) {
-        const date = selectedDate[d.id];
-        const time = selectedTime[d.id];
-        const formatted = new Date(date).toLocaleDateString("en-GB"); // dd/mm/yyyy
+        const formatted = new Date(selectedDate[d.id]).toLocaleDateString("en-GB");
         const greeting = getGreeting();
+
         const preview =
           `💬 Preview Message\n\n` +
           `💚 *${greeting} ${d.name}!* \n\n` +
@@ -196,38 +218,53 @@ export default function Doctors() {
           `👨‍⚕️ Doctor: ${d.name}\n` +
           `🏥 Department: ${d.dept}\n` +
           `📅 Preferred Date: ${formatted}\n` +
-          `⏰ Preferred Time: ${time}\n` +
+          `⏰ Preferred Time: ${selectedTime[d.id]}\n` +
           `━━━━━━━━━━━━━━━━━━━\n\n👤 Patient Name: __________`;
-        setReadyMsg((prev) => ({ ...prev, [d.id]: preview }));
+
+        setReadyMsg((p) => ({ ...p, [d.id]: preview }));
       }
     });
   }, [selectedDate, selectedTime, filtered.length]);
 
+  /* Open modal */
   const handleModal = (d) => {
-    const date = selectedDate[d.id];
-    const time = selectedTime[d.id];
-    if (!date || !time) return alert("Select date and time first.");
+    if (!selectedDate[d.id] || !selectedTime[d.id]) return alert("Select date and time first.");
     setModalDoctor(d);
-    setModalDate(date);
-    setModalTime(time);
+    setModalDate(selectedDate[d.id]);
+    setModalTime(selectedTime[d.id]);
     setModalOpen(true);
   };
 
+  /* Send WhatsApp message */
   const handleConfirm = (patientName) => {
     if (!patientName) return;
+
     const d = modalDoctor;
-    const date = selectedDate[d.id];
-    const time = selectedTime[d.id];
+    const formatted = new Date(selectedDate[d.id]).toLocaleDateString("en-GB");
     const greeting = getGreeting();
-    const formatted = new Date(date).toLocaleDateString("en-GB");
+
     const msg =
       `💚 *${greeting} ${d.name}!* \n\n` +
       `I’d like to request an *appointment booking*.\n\n` +
-      `━━━━━━━━━━━━━━━━━━━\n👨‍⚕️ Doctor: ${d.name}\n🏥 Department: ${d.dept}\n📅 Preferred Date: ${formatted}\n⏰ Preferred Time: ${time}\n━━━━━━━━━━━━━━━━━━━\n\n👤 Patient Name: ${patientName}`;
-    window.open(`https://wa.me/${d.whatsapp}?text=${encodeURIComponent(msg)}`, "_blank");
+      `━━━━━━━━━━━━━━━━━━━\n` +
+      `👨‍⚕️ Doctor: ${d.name}\n` +
+      `🏥 Department: ${d.dept}\n` +
+      `📅 Preferred Date: ${formatted}\n` +
+      `⏰ Preferred Time: ${selectedTime[d.id]}\n` +
+      `━━━━━━━━━━━━━━━━━━━\n\n` +
+      `👤 Patient Name: ${patientName}`;
+
+    window.open(
+      `https://wa.me/${d.whatsapp}?text=${encodeURIComponent(msg)}`,
+      "_blank"
+    );
+
     setModalOpen(false);
   };
 
+  /* -------------------------------------------
+     PAGE UI
+  -------------------------------------------- */
   return (
     <section className="relative min-h-screen">
       {/* Background Glow */}
@@ -269,14 +306,14 @@ export default function Doctors() {
               className="rounded-3xl border shadow-lg bg-white/80 backdrop-blur-xl overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all flex flex-col"
             >
               <SmartImage src={d.image} alt={d.name} />
+
               <div className="p-5 flex flex-col gap-4 flex-1">
                 <div>
                   <h3 className="text-lg font-bold text-slate-900">{d.name}</h3>
                   <p className="text-sm text-emerald-700 font-medium">{d.dept}</p>
-                  <p className="text-xs text-slate-500">{d.exp}</p>
                 </div>
 
-                {/* Date */}
+                {/* Date Selection */}
                 <div className="flex items-center gap-2">
                   <Calendar size={16} className="text-emerald-600 shrink-0" />
                   <input
@@ -291,7 +328,7 @@ export default function Doctors() {
                   />
                 </div>
 
-                {/* Time */}
+                {/* Time Selection */}
                 <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
                   <Clock size={16} className="text-emerald-600 shrink-0" />
                   <div className="flex gap-2">
@@ -316,7 +353,7 @@ export default function Doctors() {
                   </div>
                 </div>
 
-                {/* Preview */}
+                {/* Preview Box */}
                 {readyMsg[d.id] && (
                   <motion.div
                     initial={{ opacity: 0 }}
@@ -330,7 +367,7 @@ export default function Doctors() {
                   </motion.div>
                 )}
 
-                {/* Actions */}
+                {/* Action Buttons */}
                 <div className="flex flex-col sm:flex-row gap-2 mt-auto">
                   <button
                     onClick={() => handleModal(d)}
@@ -343,6 +380,7 @@ export default function Doctors() {
                   >
                     <Send size={14} /> Send via WhatsApp
                   </button>
+
                   <a
                     href={`tel:${d.phone}`}
                     className="flex-1 inline-flex items-center justify-center gap-2 rounded-full py-2 text-xs font-semibold bg-white border border-emerald-300 text-emerald-700 hover:bg-emerald-50 transition-all"
