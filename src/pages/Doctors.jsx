@@ -43,7 +43,7 @@ function SmartImage({ src, alt }) {
   );
 }
 
-const WHATSAPP_NUMBER = "919092357100";
+const WHATSAPP_NUMBER = "+918098096555";
 
 const doctors = [
   { id: "1", name: "Dr. Vignesh Kesavan", dept: "Dermatology, Venereology & Leprosy (DVL)" },
@@ -70,8 +70,10 @@ const doctors = [
 ].map((d, i) => ({
   ...d,
   image: `/images/doctor${i + 1}.jpg`,
-  phone: `+9190000000${(i + 10).toString().padStart(2, "0")}`,
-  whatsapp: WHATSAPP_NUMBER,
+phone: `+91809809655`,
+whatsapp: WHATSAPP_NUMBER,
+
+
 }));
 
 const timeSlots = ["09:00 AM", "10:30 AM", "12:00 PM", "03:00 PM", "04:30 PM", "06:00 PM"];
