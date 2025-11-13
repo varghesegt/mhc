@@ -245,12 +245,11 @@ const handleConfirm = (patientName) => {
   const msg =
     `💚 *${greeting} ${d.name}!* \n\n` +
     `I’d like to request an *appointment booking*.\n\n` +
-    `━━━━━━━━━━━━━━━━━━━\n` +
     `👨‍⚕️ Doctor: ${d.name}\n` +
     `🏥 Department: ${d.dept}\n` +
     `📅 Preferred Date: ${formatted}\n` +
     `⏰ Preferred Time: ${selectedTime[d.id]}\n` +
-    `━━━━━━━━━━━━━━━━━━━\n\n` +
+    `\n` +
     `👤 Patient Name: ${patientName}`;
 
   window.open(
