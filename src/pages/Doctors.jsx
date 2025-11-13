@@ -212,7 +212,7 @@ export default function Doctors() {
 
         const preview =
           `💬 Preview Message\n\n` +
-          `💚 *${greeting} ${d.name}!* \n\n` +
+          `💚 ${greeting}\n\n` +
           `I’d like to request an *appointment booking*.\n\n` +
           `👨‍⚕️ Doctor: ${d.name}\n` +
           `🏥 Department: ${d.dept}\n` +
