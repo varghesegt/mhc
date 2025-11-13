@@ -70,7 +70,7 @@ const doctors = [
 ].map((d, i) => ({
   ...d,
   image: `/images/doctor${i + 1}.jpg`,
-phone: `+91809809655`,
+phone: "+918098096555",
 whatsapp: WHATSAPP_NUMBER,
 
 
