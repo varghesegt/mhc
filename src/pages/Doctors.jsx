@@ -48,13 +48,12 @@ function SmartImage({ src, alt }) {
 }
 
 /* -------------------------------------------
-   CORRECT WHATSAPP NUMBER
-   WhatsApp URLs MUST NOT contain "+"
+   WHATSAPP NUMBER (NO PLUS SIGN)
 -------------------------------------------- */
 const WHATSAPP_NUMBER = "918098096555";
 
 /* -------------------------------------------
-   DOCTORS LIST + IMAGE + PHONE MAPPING
+   DOCTORS LIST
 -------------------------------------------- */
 const doctors = [
   { id: "1", name: "Dr. Vignesh Kesavan", dept: "Dermatology, Venereology & Leprosy (DVL)" },
@@ -86,7 +85,7 @@ const doctors = [
 }));
 
 /* -------------------------------------------
-   TIME SLOTS & DATE HELPERS
+   TIME + UTILS
 -------------------------------------------- */
 const timeSlots = [
   "09:00 AM",
@@ -113,15 +112,18 @@ const getGreeting = () => {
 };
 
 /* -------------------------------------------
-   NAME ENTRY MODAL (BEFORE SENDING WHATSAPP)
+   NAME ENTRY MODAL
 -------------------------------------------- */
 function NameModal({ open, onClose, onConfirm, doctor, date, time }) {
   const [name, setName] = useState("");
-  const ref = useRef(null);
+  const inputRef = useRef(null);
 
   useEffect(() => {
-    if (open) setTimeout(() => ref.current?.focus(), 100);
-    else setName("");
+    if (open) {
+      setTimeout(() => inputRef.current?.focus(), 200);
+    } else {
+      setName("");
+    }
   }, [open]);
 
   return (
@@ -133,44 +135,49 @@ function NameModal({ open, onClose, onConfirm, doctor, date, time }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
+          <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={onClose} />
 
           <motion.div
-            className="relative w-full max-w-md rounded-2xl shadow-2xl border border-white/10 bg-white/90 backdrop-blur-xl p-6"
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 30, opacity: 0 }}
+            className="relative w-full max-w-md rounded-2xl bg-white p-6 shadow-xl"
+            initial={{ y: 50 }}
+            animate={{ y: 0 }}
+            exit={{ y: 50 }}
           >
             <button
+              className="absolute top-3 right-3"
               onClick={onClose}
-              className="absolute right-3 top-3 rounded-full p-1.5 hover:bg-slate-100"
             >
-              <X className="h-5 w-5 text-slate-500" />
+              <X className="text-slate-500" />
             </button>
 
-            <h3 className="text-xl font-bold text-slate-900 mb-1">Confirm Appointment</h3>
-            <p className="text-sm text-slate-600">{doctor?.name} — {doctor?.dept}</p>
-            <p className="text-xs text-slate-500 mb-4">{date} at {time}</p>
+            <h3 className="text-xl font-bold">Confirm Appointment</h3>
+            <p className="text-sm text-gray-600 mt-1">
+              {doctor?.name} — {doctor?.dept}
+            </p>
 
-            <label className="text-sm font-medium text-slate-800">Patient Full Name</label>
+            <p className="text-xs text-gray-500 mt-1">
+              {date} at {time}
+            </p>
+
+            <label className="block text-sm mt-4">Patient Full Name</label>
             <input
-              ref={ref}
+              ref={inputRef}
               value={name}
               onChange={(e) => setName(e.target.value)}
+              className="w-full border px-3 py-2 rounded-md mt-1"
               placeholder="Enter full name"
-              className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-emerald-500"
             />
 
-            <div className="mt-5 flex gap-3">
+            <div className="flex gap-3 mt-6">
               <button
                 onClick={onClose}
-                className="flex-1 border border-slate-300 rounded-lg py-2 text-sm font-semibold hover:bg-slate-100"
+                className="w-1/2 border rounded-md py-2"
               >
                 Cancel
               </button>
               <button
                 onClick={() => onConfirm(name.trim())}
-                className="flex-1 bg-emerald-600 text-white rounded-lg py-2 text-sm font-semibold hover:bg-emerald-700"
+                className="w-1/2 bg-emerald-600 text-white rounded-md py-2"
               >
                 Continue
               </button>
@@ -183,110 +190,104 @@ function NameModal({ open, onClose, onConfirm, doctor, date, time }) {
 }
 
 /* -------------------------------------------
-   MAIN DOCTORS PAGE
+   MAIN PAGE
 -------------------------------------------- */
 export default function Doctors() {
   const [search, setSearch] = useState("");
   const [selectedDate, setSelectedDate] = useState({});
   const [selectedTime, setSelectedTime] = useState({});
-  const [readyMsg, setReadyMsg] = useState({});
+  const [previewMsg, setPreviewMsg] = useState({});
   const [modalOpen, setModalOpen] = useState(false);
   const [modalDoctor, setModalDoctor] = useState(null);
   const [modalDate, setModalDate] = useState("");
   const [modalTime, setModalTime] = useState("");
 
-  /* Filtering */
+  /* Search Logic */
   const filtered = useMemo(() => {
     const s = search.toLowerCase();
     return doctors.filter(
-      (d) => d.name.toLowerCase().includes(s) || d.dept.toLowerCase().includes(s)
+      (d) =>
+        d.name.toLowerCase().includes(s) ||
+        d.dept.toLowerCase().includes(s)
     );
   }, [search]);
 
-  /* Generate preview WhatsApp message */
+  /* Build preview message */
   useEffect(() => {
     filtered.forEach((d) => {
       if (selectedDate[d.id] && selectedTime[d.id]) {
         const formatted = new Date(selectedDate[d.id]).toLocaleDateString("en-GB");
         const greeting = getGreeting();
-
         const preview =
           `💬 Preview Message\n\n` +
           `💚 *${greeting} ${d.name}!* \n\n` +
-          `I’d like to request an *appointment booking*.\n\n` +
+          `I’d like to request an *appointment booking*. \n\n` +
           `━━━━━━━━━━━━━━━━━━━\n` +
           `👨‍⚕️ Doctor: ${d.name}\n` +
           `🏥 Department: ${d.dept}\n` +
-          `📅 Preferred Date: ${formatted}\n` +
-          `⏰ Preferred Time: ${selectedTime[d.id]}\n` +
-          `━━━━━━━━━━━━━━━━━━━\n\n👤 Patient Name: __________`;
+          `📅 Date: ${formatted}\n` +
+          `⏰ Time: ${selectedTime[d.id]}\n` +
+          `━━━━━━━━━━━━━━━━━━━\n\n` +
+          `👤 Patient Name: __________`;
 
-        setReadyMsg((p) => ({ ...p, [d.id]: preview }));
+        setPreviewMsg((p) => ({ ...p, [d.id]: preview }));
       }
     });
   }, [selectedDate, selectedTime, filtered.length]);
 
   /* Open modal */
-  const handleModal = (d) => {
-    if (!selectedDate[d.id] || !selectedTime[d.id]) return alert("Select date and time first.");
+  const openModal = (d) => {
+    if (!selectedDate[d.id] || !selectedTime[d.id])
+      return alert("Please select both date and time first.");
+
     setModalDoctor(d);
     setModalDate(selectedDate[d.id]);
     setModalTime(selectedTime[d.id]);
     setModalOpen(true);
   };
 
-  /* Send WhatsApp message */
-  const handleConfirm = (patientName) => {
-    if (!patientName) return;
+  /* Send message */
+  const handleConfirm = (name) => {
+    if (!name) return;
 
     const d = modalDoctor;
-    const formatted = new Date(selectedDate[d.id]).toLocaleDateString("en-GB");
+    const formatted = new Date(modalDate).toLocaleDateString("en-GB");
     const greeting = getGreeting();
 
     const msg =
       `💚 *${greeting} ${d.name}!* \n\n` +
       `I’d like to request an *appointment booking*.\n\n` +
-      `━━━━━━━━━━━━━━━━━━━\n` +
+      `━━━━━━━━━━━━━━\n` +
       `👨‍⚕️ Doctor: ${d.name}\n` +
       `🏥 Department: ${d.dept}\n` +
-      `📅 Preferred Date: ${formatted}\n` +
-      `⏰ Preferred Time: ${selectedTime[d.id]}\n` +
-      `━━━━━━━━━━━━━━━━━━━\n\n` +
-      `👤 Patient Name: ${patientName}`;
+      `📅 Date: ${formatted}\n` +
+      `⏰ Time: ${modalTime}\n` +
+      `━━━━━━━━━━━━━━\n\n` +
+      `👤 Patient Name: ${name}`;
 
     window.open(
-      `https://wa.me/${d.whatsapp}?text=${encodeURIComponent(msg)}`,
+      `https://wa.me/${d.whatsapp}/?text=${encodeURIComponent(msg)}`,
       "_blank"
     );
 
     setModalOpen(false);
   };
 
-  /* -------------------------------------------
-     PAGE UI
-  -------------------------------------------- */
+  /* UI */
   return (
     <section className="relative min-h-screen">
-      {/* Background Glow */}
-      <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute -top-24 -left-20 h-80 w-80 bg-emerald-300/30 blur-3xl rounded-full" />
-        <div className="absolute bottom-0 right-0 h-80 w-80 bg-sky-300/30 blur-3xl rounded-full" />
-      </div>
-
       <div className="max-w-7xl mx-auto px-4 py-10">
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 text-center mb-1">
-          Meet Our Specialists
-        </h2>
+        <h2 className="text-4xl font-extrabold text-center mb-2">Meet Our Specialists</h2>
         <p className="text-slate-600 text-center mb-8">
-          Search your doctor, pick a date within 2 months, and book instantly via WhatsApp or call.
+          Search your doctor, select date & time, and book instantly via WhatsApp.
         </p>
 
-        {/* Search */}
+        {/* Search Box */}
         <div className="flex justify-center mb-8">
-          <div className="flex items-center bg-white/90 backdrop-blur-xl px-4 py-3 rounded-2xl shadow border w-full sm:w-96">
+          <div className="flex items-center bg-white px-4 py-3 rounded-2xl shadow border w-full sm:w-96">
             <Search size={18} className="text-emerald-600 mr-2" />
             <input
-              placeholder="Search by doctor or department..."
+              placeholder="Search doctor or department..."
               className="bg-transparent outline-none text-sm w-full"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -296,86 +297,75 @@ export default function Doctors() {
 
         {/* Doctors Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filtered.map((d, i) => (
+          {filtered.map((d) => (
             <motion.div
               key={d.id}
               initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.05 }}
-              className="rounded-3xl border shadow-lg bg-white/80 backdrop-blur-xl overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all flex flex-col"
+              animate={{ opacity: 1, y: 0 }}
+              className="rounded-3xl border shadow bg-white overflow-hidden"
             >
               <SmartImage src={d.image} alt={d.name} />
 
-              <div className="p-5 flex flex-col gap-4 flex-1">
-                <div>
-                  <h3 className="text-lg font-bold text-slate-900">{d.name}</h3>
-                  <p className="text-sm text-emerald-700 font-medium">{d.dept}</p>
-                </div>
+              <div className="p-5 flex flex-col gap-4">
+                <h3 className="text-lg font-bold">{d.name}</h3>
+                <p className="text-sm text-emerald-700">{d.dept}</p>
 
-                {/* Date Selection */}
-                <div className="flex items-center gap-2">
-                  <Calendar size={16} className="text-emerald-600 shrink-0" />
+                {/* Date */}
+                <div className="flex gap-2 items-center">
+                  <Calendar size={16} className="text-emerald-600" />
                   <input
                     type="date"
+                    className="border rounded px-3 py-2 text-sm w-full"
                     min={todayISO()}
                     max={maxDateISO()}
                     value={selectedDate[d.id] || ""}
                     onChange={(e) =>
                       setSelectedDate((p) => ({ ...p, [d.id]: e.target.value }))
                     }
-                    className="border border-slate-300 rounded-lg px-3 py-2 text-sm w-full outline-none focus:ring-2 focus:ring-emerald-500"
                   />
                 </div>
 
-                {/* Time Selection */}
-                <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
-                  <Clock size={16} className="text-emerald-600 shrink-0" />
+                {/* Time */}
+                <div className="flex gap-2 overflow-x-auto">
+                  <Clock size={16} className="text-emerald-600" />
                   <div className="flex gap-2">
-                    {timeSlots.map((slot) => {
-                      const active = selectedTime[d.id] === slot;
-                      return (
-                        <button
-                          key={slot}
-                          onClick={() =>
-                            setSelectedTime((p) => ({ ...p, [d.id]: slot }))
-                          }
-                          className={`whitespace-nowrap px-3 py-1.5 rounded-full text-xs border transition-all ${
-                            active
-                              ? "bg-emerald-600 text-white border-emerald-600 shadow-md"
-                              : "border-slate-300 text-slate-700 hover:bg-slate-100"
-                          }`}
-                        >
-                          {slot}
-                        </button>
-                      );
-                    })}
+                    {timeSlots.map((slot) => (
+                      <button
+                        key={slot}
+                        onClick={() =>
+                          setSelectedTime((p) => ({ ...p, [d.id]: slot }))
+                        }
+                        className={`px-3 py-1 rounded-full text-xs border ${
+                          selectedTime[d.id] === slot
+                            ? "bg-emerald-600 text-white border-emerald-600"
+                            : "border-slate-300 text-slate-700"
+                        }`}
+                      >
+                        {slot}
+                      </button>
+                    ))}
                   </div>
                 </div>
 
-                {/* Preview Box */}
-                {readyMsg[d.id] && (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="bg-emerald-50/70 border border-emerald-200 rounded-xl p-3 text-xs text-slate-700 whitespace-pre-line shadow-inner"
-                  >
-                    <p className="font-semibold text-emerald-700 mb-1 flex items-center gap-1">
+                {/* Preview */}
+                {previewMsg[d.id] && (
+                  <div className="bg-emerald-50 border p-3 rounded text-xs whitespace-pre-line">
+                    <p className="font-semibold mb-1 flex items-center gap-1">
                       <MessageSquare size={12} /> Message Preview
                     </p>
-                    <p>{readyMsg[d.id]}</p>
-                  </motion.div>
+                    {previewMsg[d.id]}
+                  </div>
                 )}
 
-                {/* Action Buttons */}
-                <div className="flex flex-col sm:flex-row gap-2 mt-auto">
+                {/* Buttons */}
+                <div className="flex flex-col gap-2 mt-3">
                   <button
-                    onClick={() => handleModal(d)}
+                    onClick={() => openModal(d)}
                     disabled={!selectedDate[d.id] || !selectedTime[d.id]}
-                    className={`flex-1 inline-flex items-center justify-center gap-2 rounded-full py-2 text-xs font-semibold transition-all ${
+                    className={`w-full py-2 rounded-full text-sm font-semibold flex items-center justify-center gap-2 ${
                       selectedDate[d.id] && selectedTime[d.id]
-                        ? "bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md hover:shadow-lg hover:from-emerald-700 hover:to-teal-700"
-                        : "bg-slate-200 text-slate-500 cursor-not-allowed"
+                        ? "bg-emerald-600 text-white"
+                        : "bg-slate-200 text-slate-500"
                     }`}
                   >
                     <Send size={14} /> Send via WhatsApp
@@ -383,7 +373,7 @@ export default function Doctors() {
 
                   <a
                     href={`tel:${d.phone}`}
-                    className="flex-1 inline-flex items-center justify-center gap-2 rounded-full py-2 text-xs font-semibold bg-white border border-emerald-300 text-emerald-700 hover:bg-emerald-50 transition-all"
+                    className="w-full py-2 rounded-full text-sm font-semibold border border-emerald-400 text-emerald-600 flex items-center justify-center gap-2"
                   >
                     <Phone size={14} /> Call Doctor
                   </a>
@@ -392,15 +382,9 @@ export default function Doctors() {
             </motion.div>
           ))}
         </div>
-
-        {filtered.length === 0 && (
-          <p className="text-center text-slate-500 mt-10">
-            No doctors found. Try a different name or department.
-          </p>
-        )}
       </div>
 
-      {/* Modal */}
+      {/* MODAL */}
       <NameModal
         open={modalOpen}
         onClose={() => setModalOpen(false)}
