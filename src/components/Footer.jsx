@@ -15,71 +15,75 @@ export default function Footer() {
   return (
     <footer className="relative bg-[#020617] text-white">
 
-      {/* Premium Glow Background */}
+      {/* Background Glow Effects */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute -top-20 -left-20 w-[450px] h-[450px] bg-blue-600/25 rounded-full blur-[150px]" />
-        <div className="absolute bottom-0 right-0 w-[450px] h-[450px] bg-teal-500/20 rounded-full blur-[150px]" />
+        <div className="absolute -top-32 -left-32 w-[500px] h-[500px] bg-blue-600/25 rounded-full blur-[180px]" />
+        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-teal-500/25 rounded-full blur-[180px]" />
       </div>
 
-      {/* Footer Main */}
+      {/* Main Footer Grid */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-4 gap-14">
 
-        {/* Brand */}
+        {/* Brand / About */}
         <div>
           <h4 className="text-3xl font-extrabold bg-gradient-to-r from-cyan-400 to-blue-300 bg-clip-text text-transparent pb-2">
             MHC Hospital
           </h4>
+
           <p className="text-blue-100 leading-relaxed text-sm pr-6">
-            World-class medical expertise, compassionate care & cutting-edge
-            health technology — all in one place.
+            World-class medical expertise, compassionate care, modern facilities,
+            and <span className="text-cyan-300 font-semibold">AFFORDABLE – all in one place.</span>
           </p>
 
           {/* Social Icons */}
           <div className="flex gap-3 mt-6">
-            {[FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn].map(
-              (Icon, i) => (
-                <a
-                  key={i}
-                  href="#"
-                  className="w-10 h-10 flex items-center justify-center rounded-full
-                  bg-white/10 hover:bg-white/20 transition-all hover:scale-110 backdrop-blur-md"
-                >
-                  <Icon className="text-white text-sm" />
-                </a>
-              )
-            )}
+            {[FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn].map((Icon, i) => (
+              <a
+                key={i}
+                href="#"
+                className="w-10 h-10 flex items-center justify-center rounded-full
+                bg-white/10 hover:bg-white/20 transition-all hover:scale-110 backdrop-blur-md shadow-lg"
+              >
+                <Icon className="text-white text-sm" />
+              </a>
+            ))}
           </div>
         </div>
 
         {/* Contact */}
         <div>
           <h4 className="text-lg font-bold text-cyan-400 mb-4">Contact Us</h4>
-          <ul className="space-y-3 text-blue-100 text-sm">
+          <ul className="space-y-4 text-blue-100 text-sm">
+
             <li className="flex items-center gap-3 hover:text-white transition">
-              <span className="p-2 rounded-xl bg-blue-700 shadow">
+              <span className="p-2 rounded-xl bg-blue-700 shadow-md">
                 <FaPhoneAlt size={13} />
               </span>
               +91 80980 96555
             </li>
+
             <li className="flex items-center gap-3 hover:text-white transition">
-              <span className="p-2 rounded-xl bg-blue-700 shadow">
+              <span className="p-2 rounded-xl bg-blue-700 shadow-md">
                 <FaEnvelope size={13} />
               </span>
               info@mhchospital.com
             </li>
+
             <li className="flex items-center gap-3 hover:text-white transition leading-tight">
-              <span className="p-2 rounded-xl bg-blue-700 shadow">
+              <span className="p-2 rounded-xl bg-blue-700 shadow-md">
                 <FaMapMarkerAlt size={13} />
               </span>
               Trichy, Tamil Nadu, India
             </li>
+
           </ul>
         </div>
 
         {/* Quick Links */}
         <div>
           <h4 className="text-lg font-bold text-cyan-400 mb-4">Quick Links</h4>
-          <ul className="space-y-2 text-sm text-blue-100">
+
+          <ul className="space-y-3 text-sm text-blue-100">
             {[
               ["Home", "/"],
               ["About", "/about"],
@@ -100,9 +104,10 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* MAP */}
+        {/* Map Section */}
         <div>
           <h4 className="text-lg font-bold text-cyan-400 mb-4">Locate Us</h4>
+
           <div className="rounded-2xl overflow-hidden shadow-xl border border-white/20 hover:shadow-cyan-500/30 transition-all">
             <iframe
               title="MHC Hospital Location"
@@ -116,19 +121,25 @@ export default function Footer() {
             ></iframe>
           </div>
         </div>
+
       </div>
 
       {/* Bottom Bar */}
-<div className="relative z-10 border-t border-white/10 bg-blue-950/40 backdrop-blur-md py-5 px-6 flex flex-col md:flex-row justify-between items-center text-xs text-white">
-  <p className="text-white">© 2025 MHC Hospital. All Rights Reserved.</p>
-  <a
-    href="#top"
-    className="group flex items-center gap-2 mt-3 md:mt-0 hover:text-white transition"
-  >
-    <FaArrowUp className="group-hover:-translate-y-1 transition" />
-    Back to Top
-  </a>
-</div>
+      <div className="relative z-10 border-t border-white/10 bg-blue-950/40 backdrop-blur-md py-5 px-6 flex flex-col md:flex-row justify-between items-center text-xs text-white">
+
+        <p className="text-white">
+          © 2025 MHC Hospital. All Rights Reserved.
+        </p>
+
+        <a
+          href="#top"
+          className="group flex items-center gap-2 mt-3 md:mt-0 hover:text-white transition"
+        >
+          <FaArrowUp className="group-hover:-translate-y-1 transition" />
+          Back to Top
+        </a>
+
+      </div>
 
     </footer>
   );

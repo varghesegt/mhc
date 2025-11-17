@@ -1,30 +1,36 @@
+/********************************************************************************************
+ * HOSPITAL FLAGSHIP EDITION — ULTRA PREMIUM DOCTORS PAGE (2025)
+ * Apple-Level UI • Compact Medical Cards • Glassmorphism • Animated Gradient Background
+ ********************************************************************************************/
+
 import React, { useState, useMemo, useEffect, useRef } from "react";
 import {
   Search,
   ImageOff,
   Phone,
-  MessageSquare,
   Calendar,
   Clock,
   Send,
   X,
+  GraduationCap,
+  Stethoscope,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-/* -------------------------------------------
-   IMAGE COMPONENT (LOADER + ERROR FALLBACK)
--------------------------------------------- */
+/* =========================================================================================
+   SMART IMAGE — Premium Shadow + Smooth Loader
+========================================================================================= */
 function SmartImage({ src, alt }) {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
 
   return (
     <div
-      className="relative w-full overflow-hidden rounded-3xl group"
+      className="relative w-full overflow-hidden rounded-2xl bg-white shadow-[0_0_40px_rgba(0,0,0,0.05)]"
       style={{ aspectRatio: "4/5" }}
     >
       {!loaded && !error && (
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-200/80 to-slate-100/60 animate-pulse rounded-3xl" />
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-200/50 to-slate-100/40 animate-pulse rounded-2xl" />
       )}
 
       {!error ? (
@@ -34,12 +40,12 @@ function SmartImage({ src, alt }) {
           loading="lazy"
           onLoad={() => setLoaded(true)}
           onError={() => setError(true)}
-          className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 
-          ${loaded ? "opacity-100 scale-100" : "opacity-0 scale-105"} 
-          group-hover:scale-110`}
+          className={`absolute inset-0 w-full h-full object-cover transition-all duration-[900ms] ease-out
+            ${loaded ? "opacity-100 scale-100" : "opacity-0 scale-110"}
+            group-hover:scale-105`}
         />
       ) : (
-        <div className="absolute inset-0 bg-slate-100 flex items-center justify-center rounded-3xl">
+        <div className="absolute inset-0 bg-slate-100 flex items-center justify-center rounded-2xl">
           <ImageOff className="w-10 h-10 text-slate-400" />
         </div>
       )}
@@ -47,56 +53,56 @@ function SmartImage({ src, alt }) {
   );
 }
 
-/* -------------------------------------------
-   CORRECT WHATSAPP NUMBER
-   WhatsApp URLs MUST NOT contain "+"
--------------------------------------------- */
-const WHATSAPP_NUMBER = "918098096555";
+/* =========================================================================================
+   WHATSAPP
+========================================================================================= */
+const WHATSAPP = "918098096555";
 
-/* -------------------------------------------
-   DOCTORS LIST + IMAGE + PHONE MAPPING
--------------------------------------------- */
-const doctors = [
-  { id: "1", name: "Dr. Vignesh Kesavan", dept: "Dermatology, Venereology & Leprosy (DVL)" },
-  { id: "2", name: "Dr. Keerthika Jayaraman", dept: "Radiation Therapy" },
-  { id: "3", name: "Dr. Arun Gandhi", dept: "Orthopedics" },
-  { id: "4", name: "Dr. Indirapriyadharsini", dept: "Anesthesiology" },
-  { id: "5", name: "Dr. Jerome D’Souza A", dept: "General Surgery" },
-  { id: "6", name: "Dr. Sakthivel P", dept: "Anatomy (BDS, MSc Anat.)" },
-  { id: "7", name: "Dr. Rajeswari S", dept: "Dental Surgery (BDS, D.Pharm)" },
-  { id: "8", name: "Dr. Sai Vidyasagar S", dept: "Oral & Maxillofacial Surgery (MDS)" },
-  { id: "9", name: "Dr. Manjula P", dept: "General Surgery" },
-  { id: "10", name: "Dr. Saravanan R P", dept: "General Medicine" },
-  { id: "11", name: "Dr. Raji Lakshmanan", dept: "Obstetrics & Gynecology" },
-  { id: "12", name: "Dr. Kannan D", dept: "Plastic & Reconstructive Surgery" },
-  { id: "13", name: "Dr. Anand Babu", dept: "Pulmonology" },
-  { id: "14", name: "Dr. Ajit Kumar N", dept: "Spine Surgery" },
-  { id: "15", name: "Dr. Amuthan K R", dept: "Otorhinolaryngology (ENT)" },
-  { id: "16", name: "Dr. Malathi Sriram", dept: "Obstetrics & Gynecology (DGO)" },
-  { id: "17", name: "Dr. Vignesh V", dept: "Dentistry" },
-  { id: "18", name: "Dr. Sakthivadivan P", dept: "General Surgery" },
-  { id: "19", name: "Dr. Vijay Pradap", dept: "Otorhinolaryngology (ENT)" },
-  { id: "20", name: "Dr. Aruleeswaran Thangarasu", dept: "Otorhinolaryngology (ENT)" },
-  { id: "21", name: "Dr. Satheesh Govindan", dept: "Anesthesiology" },
+/* =========================================================================================
+   DOCTOR DATA
+========================================================================================= */
+const DOCTORS = [
+  { name: "Dr. Ajit Kumar N", degree: "DNB Ortho, FISS (Spine)", dept: "Orthopaedics – Spine Surgery" },
+  { name: "Dr. Amuthan K R", degree: "MS (ENT)", dept: "ENT – Otorhinolaryngology" },
+  { name: "Dr. Anand Babu", degree: "DNB, IDCCM, EDIC", dept: "Pulmonology" },
+  { name: "Dr. Aruleeshwaran Thangarasu", degree: "DLO", dept: "ENT – Otorhinolaryngology" },
+  { name: "Dr. Arun Gandhi", degree: "MS Ortho", dept: "Orthopaedics" },
+  { name: "Dr. Indirapriyadharsini", degree: "DNB (Anaesthesia), PAED Anaesthesia", dept: "Anaesthesiology & Emergency" },
+  { name: "Dr. Jerome D’Souza A", degree: "MS, DrNB(SGE), FIAGES", dept: "Gastroenterology – HPB & Cancer Surgery" },
+  { name: "Dr. Kannan D", degree: "MS, MCh (Plastic)", dept: "Plastic & Reconstructive Surgery" },
+  { name: "Dr. Keerthika Jayaraman", degree: "MD RT", dept: "Oncology – Radiotherapy" },
+  { name: "Dr. Kishwanth R", degree: "MD, DM", dept: "Gastroenterology & Hepatology" },
+  { name: "Dr. Lavanya R", degree: "MD", dept: "Pathology" },
+  { name: "Dr. Malathi Sriram", degree: "DGO", dept: "Obstetrics & Gynecology" },
+  { name: "Dr. Manjula P", degree: "MS (General Surgery)", dept: "General Surgery" },
+  { name: "Dr. Rajeswari S", degree: "BDS", dept: "Dentistry" },
+  { name: "Dr. Raji Lakshmanan", degree: "MS", dept: "Obstetrics & Gynecology" },
+  { name: "Dr. Sai Vidyasagar S", degree: "MDS", dept: "Oral & Maxillofacial Surgery" },
+  { name: "Dr. Sakthivadivan P", degree: "MS, FIAGES, FALS", dept: "General & Laparoscopic Surgery" },
+  { name: "Dr. Sakthivel P", degree: "BDS, MSc Anat", dept: "Dentistry" },
+  { name: "Dr. Saravanan R P", degree: "MD, F.Echo", dept: "General Medicine" },
+  { name: "Dr. Sathish", degree: "Dip (Anes)", dept: "Anaesthesiology & Emergency" },
+  { name: "Dr. Sheik Abdulla", degree: "", dept: "Nephrology" },
+  { name: "Dr. Sivagurunathan", degree: "", dept: "Pediatrics" },
+  { name: "Dr. Sundaravelu M", degree: "DLO", dept: "ENT – Otorhinolaryngology" },
+  { name: "Dr. Sunitha M", degree: "DPM, DNB", dept: "Psychiatry" },
+  { name: "Dr. Suresh Bhalaji", degree: "DNB, MS, MCh", dept: "Urology" },
+  { name: "Dr. Vignesh Kesavan", degree: "MD DVL", dept: "Dermatology & Cosmetology" },
+  { name: "Dr. Vignesh V", degree: "DNB, IDCCM, FNB, EDIC, MRCP", dept: "Anaesthesiology & Emergency" },
+  { name: "Dr. Vijay Pradap", degree: "MS (ENT)", dept: "ENT – Otorhinolaryngology" },
+  { name: "Dr. Vinoth Rayar", degree: "MDRD", dept: "Radiology" },
+  { name: "Dr. Visalatchi", degree: "MBBS, MD", dept: "Psychiatry" },
 ].map((d, i) => ({
+  id: i + 1,
   ...d,
-  image: `/images/doctor${i + 1}.jpg`,
   phone: "+918098096555",
-  whatsapp: WHATSAPP_NUMBER,
+  whatsapp: WHATSAPP,
+  image: `/images/doctor${i + 1}.jpg`,
 }));
 
-/* -------------------------------------------
-   TIME SLOTS & DATE HELPERS
--------------------------------------------- */
-const timeSlots = [
-  "09:00 AM",
-  "10:30 AM",
-  "12:00 PM",
-  "03:00 PM",
-  "04:30 PM",
-  "06:00 PM",
-];
-
+/* =========================================================================================
+   HELPERS
+========================================================================================= */
 const todayISO = () => new Date().toISOString().slice(0, 10);
 
 const maxDateISO = () => {
@@ -105,22 +111,24 @@ const maxDateISO = () => {
   return d.toISOString().slice(0, 10);
 };
 
-const getGreeting = () => {
+const timeSlots = ["09:00 AM", "10:00 AM", "11:30 AM", "03:00 PM", "05:00 PM"];
+
+const greeting = () => {
   const h = new Date().getHours();
-  if (h < 12) return "Good morning";
-  if (h < 17) return "Good afternoon";
-  return "Good evening";
+  if (h < 12) return "Good Morning";
+  if (h < 17) return "Good Afternoon";
+  return "Good Evening";
 };
 
-/* -------------------------------------------
-   NAME ENTRY MODAL (BEFORE SENDING WHATSAPP)
--------------------------------------------- */
+/* =========================================================================================
+   NAME MODAL — Apple Modal Card
+========================================================================================= */
 function NameModal({ open, onClose, onConfirm, doctor, date, time }) {
   const [name, setName] = useState("");
-  const ref = useRef(null);
+  const ref = useRef();
 
   useEffect(() => {
-    if (open) setTimeout(() => ref.current?.focus(), 100);
+    if (open) setTimeout(() => ref.current?.focus(), 120);
     else setName("");
   }, [open]);
 
@@ -128,53 +136,40 @@ function NameModal({ open, onClose, onConfirm, doctor, date, time }) {
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
         >
-          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
-
           <motion.div
-            className="relative w-full max-w-md rounded-2xl shadow-2xl border border-white/10 bg-white/90 backdrop-blur-xl p-6"
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 30, opacity: 0 }}
+            className="bg-white/90 backdrop-blur-xl p-7 rounded-3xl border border-white/40 shadow-[0_0_80px_rgba(0,0,0,0.2)] max-w-md w-full relative"
+            initial={{ scale: 0.92, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
           >
-            <button
-              onClick={onClose}
-              className="absolute right-3 top-3 rounded-full p-1.5 hover:bg-slate-100"
-            >
-              <X className="h-5 w-5 text-slate-500" />
+            <button className="absolute top-4 right-4" onClick={onClose}>
+              <X className="text-slate-500 w-6 h-6" />
             </button>
 
-            <h3 className="text-xl font-bold text-slate-900 mb-1">Confirm Appointment</h3>
-            <p className="text-sm text-slate-600">{doctor?.name} — {doctor?.dept}</p>
-            <p className="text-xs text-slate-500 mb-4">{date} at {time}</p>
+            <h2 className="text-2xl font-bold text-slate-900">Confirm Appointment</h2>
+            <p className="text-sm text-slate-600 mt-1">{doctor?.name}</p>
+            <p className="text-xs text-slate-400">{doctor?.dept}</p>
 
-            <label className="text-sm font-medium text-slate-800">Patient Full Name</label>
+            <p className="mt-4 text-xs text-slate-500">{date} • {time}</p>
+
+            <label className="text-sm font-semibold mt-4 block">Patient Name</label>
             <input
               ref={ref}
+              className="w-full mt-1 px-3 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-emerald-500"
               value={name}
-              onChange={(e) => setName(e.target.value)}
               placeholder="Enter full name"
-              className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-emerald-500"
+              onChange={(e) => setName(e.target.value)}
             />
 
-            <div className="mt-5 flex gap-3">
-              <button
-                onClick={onClose}
-                className="flex-1 border border-slate-300 rounded-lg py-2 text-sm font-semibold hover:bg-slate-100"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={() => onConfirm(name.trim())}
-                className="flex-1 bg-emerald-600 text-white rounded-lg py-2 text-sm font-semibold hover:bg-emerald-700"
-              >
-                Continue
-              </button>
-            </div>
+            <button
+              onClick={() => onConfirm(name)}
+              className="w-full mt-5 bg-gradient-to-r from-emerald-600 to-teal-600 text-white py-2.5 rounded-xl font-semibold shadow hover:shadow-lg"
+            >
+              Send WhatsApp Message
+            </button>
           </motion.div>
         </motion.div>
       )}
@@ -182,231 +177,204 @@ function NameModal({ open, onClose, onConfirm, doctor, date, time }) {
   );
 }
 
-/* -------------------------------------------
-   MAIN DOCTORS PAGE
--------------------------------------------- */
+/* =========================================================================================
+   MAIN PAGE — ULTRA PREMIUM WITH COMPACT CARDS
+========================================================================================= */
 export default function Doctors() {
   const [search, setSearch] = useState("");
   const [selectedDate, setSelectedDate] = useState({});
   const [selectedTime, setSelectedTime] = useState({});
-  const [readyMsg, setReadyMsg] = useState({});
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalDoctor, setModalDoctor] = useState(null);
-  const [modalDate, setModalDate] = useState("");
-  const [modalTime, setModalTime] = useState("");
+  const [modal, setModal] = useState({ open: false });
 
-  /* Filtering */
+  /* SEARCH FILTER */
   const filtered = useMemo(() => {
     const s = search.toLowerCase();
-    return doctors.filter(
-      (d) => d.name.toLowerCase().includes(s) || d.dept.toLowerCase().includes(s)
+    return DOCTORS.filter(
+      (d) =>
+        d.name.toLowerCase().includes(s) ||
+        d.degree.toLowerCase().includes(s) ||
+        d.dept.toLowerCase().includes(s)
     );
   }, [search]);
 
-  /* Generate preview WhatsApp message */
-  useEffect(() => {
-    filtered.forEach((d) => {
-      if (selectedDate[d.id] && selectedTime[d.id]) {
-        const formatted = new Date(selectedDate[d.id]).toLocaleDateString("en-GB");
-        const greeting = getGreeting();
+  /* SEND CONFIRMATION */
+  const handleConfirm = (name) => {
+    if (!name) return;
 
-        const preview =
-          `💬 Preview Message\n\n` +
-          `💚 ${greeting}\n\n` +
-          `I’d like to request an *appointment booking*.\n\n` +
-          `👨‍⚕️ Doctor: ${d.name}\n` +
-          `🏥 Department: ${d.dept}\n` +
-          `📅 Preferred Date: ${formatted}\n` +
-          `⏰ Preferred Time: ${selectedTime[d.id]}\n` +
-          `\n👤 Patient Name: __________`;
+    const d = modal.doctor;
+    const msg =
+      `💚 *${greeting()}, Doctor ${d.name}*\n\n` +
+      `I would like to book an appointment.\n\n` +
+      `👨‍⚕️ Doctor: ${d.name}\n` +
+      `🎓 Qualification: ${d.degree}\n` +
+      `🏥 Department: ${d.dept}\n` +
+      `📅 Date: ${modal.date}\n` +
+      `⏰ Time: ${modal.time}\n\n` +
+      `👤 Patient Name: *${name}*`;
 
-        setReadyMsg((p) => ({ ...p, [d.id]: preview }));
-      }
-    });
-  }, [selectedDate, selectedTime, filtered.length]);
+    window.open(
+      `https://api.whatsapp.com/send?phone=${d.whatsapp}&text=${encodeURIComponent(msg)}`,
+      "_blank"
+    );
 
-  /* Open modal */
-  const handleModal = (d) => {
-    if (!selectedDate[d.id] || !selectedTime[d.id]) return alert("Select date and time first.");
-    setModalDoctor(d);
-    setModalDate(selectedDate[d.id]);
-    setModalTime(selectedTime[d.id]);
-    setModalOpen(true);
+    setModal({ open: false });
   };
 
-const handleConfirm = (patientName) => {
-  if (!patientName) return;
-
-  const d = modalDoctor;
-  const formatted = new Date(selectedDate[d.id]).toLocaleDateString("en-GB");
-  const greeting = getGreeting();
-
-  const msg =
-    `💚 *${greeting} ${d.name}!* \n\n` +
-    `I’d like to request an *appointment booking*.\n\n` +
-    `👨‍⚕️ Doctor: ${d.name}\n` +
-    `🏥 Department: ${d.dept}\n` +
-    `📅 Preferred Date: ${formatted}\n` +
-    `⏰ Preferred Time: ${selectedTime[d.id]}\n` +
-    `\n` +
-    `👤 Patient Name: ${patientName}`;
-
-  window.open(
-    `https://api.whatsapp.com/send?phone=${d.whatsapp}&text=${encodeURIComponent(msg)}`,
-    "_blank"
-  );
-
-  setModalOpen(false);
-};
-
-
-
-  /* -------------------------------------------
-     PAGE UI
-  -------------------------------------------- */
+  /* =========================================================================================
+     RENDER UI
+  ========================================================================================= */
   return (
-    <section className="relative min-h-screen">
-      {/* Background Glow */}
-      <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute -top-24 -left-20 h-80 w-80 bg-emerald-300/30 blur-3xl rounded-full" />
-        <div className="absolute bottom-0 right-0 h-80 w-80 bg-sky-300/30 blur-3xl rounded-full" />
+    <section className="min-h-screen py-20 px-5 relative">
+
+      {/* BACKGROUND BLOBS */}
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-emerald-300/30 rounded-full blur-[150px]" />
+        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-blue-300/30 rounded-full blur-[150px]" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-10">
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 text-center mb-1">
-          Meet Our Specialists
-        </h2>
-        <p className="text-slate-600 text-center mb-8">
-          Search your doctor, pick a date within 2 months, and book instantly via WhatsApp or call.
-        </p>
+      {/* HEADER */}
+      <motion.h1
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        className="text-center text-5xl font-extrabold text-slate-900"
+      >
+        Our Specialist Doctors
+      </motion.h1>
 
-        {/* Search */}
-        <div className="flex justify-center mb-8">
-          <div className="flex items-center bg-white/90 backdrop-blur-xl px-4 py-3 rounded-2xl shadow border w-full sm:w-96">
-            <Search size={18} className="text-emerald-600 mr-2" />
-            <input
-              placeholder="Search by doctor or department..."
-              className="bg-transparent outline-none text-sm w-full"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </div>
+      <motion.p
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.1 }}
+        className="text-center text-slate-600 mt-3"
+      >
+        Book your appointment instantly with our expert medical specialists.
+      </motion.p>
+
+      {/* SEARCH */}
+      <motion.div
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.2 }}
+        className="flex justify-center mt-10"
+      >
+        <div className="flex items-center bg-white/90 backdrop-blur-xl px-6 py-4 rounded-2xl shadow-lg border w-full max-w-xl">
+          <Search className="text-emerald-600 mr-3" />
+          <input
+            placeholder="Search doctors, degrees or departments..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="bg-transparent outline-none w-full text-sm"
+          />
         </div>
+      </motion.div>
 
-        {/* Doctors Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filtered.map((d, i) => (
-            <motion.div
-              key={d.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.05 }}
-              className="rounded-3xl border shadow-lg bg-white/80 backdrop-blur-xl overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all flex flex-col"
-            >
-              <SmartImage src={d.image} alt={d.name} />
+      {/* GRID — COMPACT CARDS */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-14">
+        {filtered.map((d, index) => (
+          <motion.div
+            key={d.id}
+            initial={{ opacity: 0, y: 35 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.05 }}
+            viewport={{ once: true }}
+            className="rounded-2xl bg-white/80 backdrop-blur-xl border shadow-md hover:shadow-xl transition-all p-4 flex flex-col"
+          >
+            <SmartImage src={d.image} alt={d.name} />
 
-              <div className="p-5 flex flex-col gap-4 flex-1">
-                <div>
-                  <h3 className="text-lg font-bold text-slate-900">{d.name}</h3>
-                  <p className="text-sm text-emerald-700 font-medium">{d.dept}</p>
-                </div>
+            <div className="mt-4 flex flex-col gap-2 flex-1">
 
-                {/* Date Selection */}
-                <div className="flex items-center gap-2">
-                  <Calendar size={16} className="text-emerald-600 shrink-0" />
-                  <input
-                    type="date"
-                    min={todayISO()}
-                    max={maxDateISO()}
-                    value={selectedDate[d.id] || ""}
-                    onChange={(e) =>
-                      setSelectedDate((p) => ({ ...p, [d.id]: e.target.value }))
-                    }
-                    className="border border-slate-300 rounded-lg px-3 py-2 text-sm w-full outline-none focus:ring-2 focus:ring-emerald-500"
-                  />
-                </div>
+              <h3 className="text-lg font-bold text-slate-900 leading-tight">{d.name}</h3>
 
-                {/* Time Selection */}
-                <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
-                  <Clock size={16} className="text-emerald-600 shrink-0" />
-                  <div className="flex gap-2">
-                    {timeSlots.map((slot) => {
-                      const active = selectedTime[d.id] === slot;
-                      return (
-                        <button
-                          key={slot}
-                          onClick={() =>
-                            setSelectedTime((p) => ({ ...p, [d.id]: slot }))
-                          }
-                          className={`whitespace-nowrap px-3 py-1.5 rounded-full text-xs border transition-all ${
-                            active
-                              ? "bg-emerald-600 text-white border-emerald-600 shadow-md"
-                              : "border-slate-300 text-slate-700 hover:bg-slate-100"
-                          }`}
-                        >
-                          {slot}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
+              <p className="text-xs text-emerald-700 flex items-center gap-1">
+                <GraduationCap size={13} /> {d.degree}
+              </p>
 
-                {/* Preview Box */}
-                {readyMsg[d.id] && (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="bg-emerald-50/70 border border-emerald-200 rounded-xl p-3 text-xs text-slate-700 whitespace-pre-line shadow-inner"
-                  >
-                    <p className="font-semibold text-emerald-700 mb-1 flex items-center gap-1">
-                      <MessageSquare size={12} /> Message Preview
-                    </p>
-                    <p>{readyMsg[d.id]}</p>
-                  </motion.div>
-                )}
+              <p className="text-xs text-slate-600 flex items-center gap-1">
+                <Stethoscope size={13} /> {d.dept}
+              </p>
 
-                {/* Action Buttons */}
-                <div className="flex flex-col sm:flex-row gap-2 mt-auto">
-                  <button
-                    onClick={() => handleModal(d)}
-                    disabled={!selectedDate[d.id] || !selectedTime[d.id]}
-                    className={`flex-1 inline-flex items-center justify-center gap-2 rounded-full py-2 text-xs font-semibold transition-all ${
-                      selectedDate[d.id] && selectedTime[d.id]
-                        ? "bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md hover:shadow-lg hover:from-emerald-700 hover:to-teal-700"
-                        : "bg-slate-200 text-slate-500 cursor-not-allowed"
-                    }`}
-                  >
-                    <Send size={14} /> Send via WhatsApp
-                  </button>
+              {/* DATE */}
+              <div className="flex items-center gap-2 mt-1">
+                <Calendar size={15} className="text-emerald-600" />
+                <input
+                  type="date"
+                  min={todayISO()}
+                  max={maxDateISO()}
+                  value={selectedDate[d.id] || ""}
+                  onChange={(e) =>
+                    setSelectedDate((p) => ({ ...p, [d.id]: e.target.value }))
+                  }
+                  className="border border-slate-300 rounded-lg px-2 py-1.5 text-xs w-full outline-none focus:ring-1 focus:ring-emerald-500"
+                />
+              </div>
 
-                  <a
-                    href={`tel:${d.phone}`}
-                    className="flex-1 inline-flex items-center justify-center gap-2 rounded-full py-2 text-xs font-semibold bg-white border border-emerald-300 text-emerald-700 hover:bg-emerald-50 transition-all"
-                  >
-                    <Phone size={14} /> Call Doctor
-                  </a>
+              {/* TIME */}
+              <div className="flex items-center gap-2 flex-wrap mt-1">
+                <Clock size={15} className="text-emerald-600" />
+                <div className="flex gap-1.5 flex-wrap">
+                  {timeSlots.map((slot) => {
+                    const active = selectedTime[d.id] === slot;
+                    return (
+                      <button
+                        key={slot}
+                        onClick={() =>
+                          setSelectedTime((p) => ({ ...p, [d.id]: slot }))
+                        }
+                        className={`px-2.5 py-1 rounded-full text-[10px] border transition-all ${
+                          active
+                            ? "bg-emerald-600 text-white border-emerald-600 shadow"
+                            : "border-slate-300 text-slate-700 bg-white hover:bg-slate-100"
+                        }`}
+                      >
+                        {slot}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
-            </motion.div>
-          ))}
-        </div>
 
-        {filtered.length === 0 && (
-          <p className="text-center text-slate-500 mt-10">
-            No doctors found. Try a different name or department.
-          </p>
-        )}
+              {/* ACTION BUTTONS */}
+              <div className="mt-3 flex flex-col gap-1.5">
+
+                <button
+                  onClick={() =>
+                    setModal({
+                      open: true,
+                      doctor: d,
+                      date: selectedDate[d.id],
+                      time: selectedTime[d.id],
+                    })
+                  }
+                  disabled={!selectedDate[d.id] || !selectedTime[d.id]}
+                  className={`w-full py-2 rounded-lg font-medium text-xs flex items-center justify-center gap-2 transition-all ${
+                    selectedDate[d.id] && selectedTime[d.id]
+                      ? "bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow hover:shadow-lg"
+                      : "bg-slate-200 text-slate-500 cursor-not-allowed"
+                  }`}
+                >
+                  <Send size={13} /> Book WhatsApp
+                </button>
+
+                <a
+                  href={`tel:${d.phone}`}
+                  className="w-full py-2 rounded-lg border border-emerald-300 text-emerald-700 bg-white hover:bg-emerald-50 flex items-center justify-center gap-2 text-xs"
+                >
+                  <Phone size={13} /> Call Doctor
+                </a>
+              </div>
+            </div>
+          </motion.div>
+        ))}
       </div>
 
-      {/* Modal */}
+      {/* MODAL */}
       <NameModal
-        open={modalOpen}
-        onClose={() => setModalOpen(false)}
+        open={modal.open}
+        doctor={modal.doctor}
+        date={modal.date}
+        time={modal.time}
+        onClose={() => setModal({ open: false })}
         onConfirm={handleConfirm}
-        doctor={modalDoctor}
-        date={modalDate}
-        time={modalTime}
       />
     </section>
   );
